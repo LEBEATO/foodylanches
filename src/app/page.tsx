@@ -1,101 +1,100 @@
-import Image from "next/image";
+
+// app/page.tsx
+'use client';
+
+import { useEffect, useState } from "react";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/Footer";
+import dataProduscts from "./api/page"; 
+import CartButton from "@/components/CartButton";
+import MenuSection from "@/components/MenuSection"; 
+import CarouselComponent from "@/components/CaroucelComponent"; // Importação do carrossel
+
+// Defina as interfaces de forma exportável
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  useEffect(() => {
+    setProducts(dataProduscts); 
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  const addToCart = (id: number) => {
+    const product = products.find((item) => item.id === id);
+    if (!product) return;
+
+    const existingProduct = cart.find((item) => item.id === id);
+
+    let updatedCart: CartItem[];
+    if (existingProduct) {
+      updatedCart = cart.map(item =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      updatedCart = [...cart, { ...product, quantity: 1 }];
+    }
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  }
+
+  const layoutClasses = "grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8";
+
+  // Dummy data para o carrossel, se necessário
+  const dummyCarouselItems = [
+    {
+      id: "1",
+      imageSrc: "/burger-cheese.png",
+      title: "Delicioso Prato5",
+      description: "Uma descrição cativante sobre este prato incrível que você não pode perder.",
+    },
+    // ... adicione mais itens aqui
+  ];
+
+  return (
+    <main>
+      <Navbar
+        imagesrc="/logo.png"
+        title="Foody Lanches"
+        description="O melhor lugar para saborear lanches deliciosos!"
+      />
+      
+      {/* Exibir o carrossel na HomePage */}
+      <CarouselComponent items={dummyCarouselItems} /> 
+
+      {/* Renderizar as seções de cardápio, passando os produtos e a função addToCart */}
+      <MenuSection 
+        title="Nosso Cardápio" 
+        products={products} 
+        addToCart={addToCart} 
+        layoutClasses={layoutClasses} 
+      />
+      
+      <MenuSection 
+        title="X-frangos" 
+        products={products} 
+        addToCart={addToCart} 
+        layoutClasses={layoutClasses} 
+      />
+
+      <CartButton itemCount={cart.length} />
+      
+      <Footer />
+    </main>
   );
 }
