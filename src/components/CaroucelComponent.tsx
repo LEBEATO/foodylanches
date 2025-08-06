@@ -8,18 +8,39 @@ import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
-interface CarouselItemData {
-  id: string;
-  imageSrc: string;
-  description: string;
-  title: string;
-}
+// Dados dos cards do carrossel. Você pode adicionar mais aqui.
+const carouselItemsData = [
+  {
+    id: "1",
+    imageSrc: "/burger-cheese.png",
+    description: "Descrição do Card 1.",
+    title: "Título do Card 1",
+  },
+  {
+    id: "2",
+    imageSrc: "/frangao-tudo.png",
+    description: "Descrição do Card 2.",
+    title: "Título do Card 2",
+  },
+  {
+    id: "3",
+    imageSrc: "/frango-catupiry.png",
+    description: "Descrição do Card 3.",
+    title: "Título do Card 3",
+  },
+  {
+    id: "4",
+    imageSrc: "/frangao-tudo.png",
+    description: "Descrição do Card 4.",
+    title: "Título do Card 4",
+  },
+];
 
-interface CarouselComponentProps {
-  items: CarouselItemData[];
-}
+// O tipo de dados para cada item do carrossel
 
-export function CarouselComponent({ items }: CarouselComponentProps) {
+
+// O componente principal do carrossel
+export function CarouselComponent() {
   // Configuração do plugin Autoplay
   const autoplayOptions = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: false })
@@ -31,7 +52,7 @@ export function CarouselComponent({ items }: CarouselComponentProps) {
       align: "start",
       slidesToScroll: 1,
     },
-    [autoplayOptions] // Usando o plugin de autoplay
+    [autoplayOptions]
   );
 
   const scrollPrev = React.useCallback(() => {
@@ -43,24 +64,11 @@ export function CarouselComponent({ items }: CarouselComponentProps) {
   }, [emblaApi]);
 
   return (
-    // Container principal do carrossel, com largura máxima de 5xl e centralizado.
-    // Você pode ajustar 'max-w-5xl' se precisar de mais espaço.
     <div className="relative w-full max-w-5xl mx-auto py-8">
-      {/* Container do Embla, com overflow-hidden para esconder os cards que estão fora de vista. */}
       <div className="overflow-hidden" ref={emblaRef}>
-        {/*
-          Container dos slides. O 'flex' organiza os cards em linha.
-          A classe 'min-w-0' é crucial para que os slides possam encolher
-          e se ajustar de acordo com as classes 'basis', permitindo que
-          vários cards apareçam na tela.
-        */}
         <div className="flex touch-pan-y -ml-4 min-w-0">
-          {items.map((item) => (
-            // Contêiner de cada card.
-            // As classes 'basis' definem a largura de cada card em diferentes tamanhos de tela.
-            // basis-full: 1 card por tela em telas pequenas (mobile)
-            // sm:basis-1/2: 2 cards por tela em telas médias (tablet)
-            // md:basis-1/3: 3 cards por tela em telas grandes (desktop)
+          {/* Mapeia e renderiza cada item do array 'carouselItemsData' */}
+          {carouselItemsData.map((item) => (
             <div
               key={item.id}
               className="pl-4 flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 flex flex-col items-center"
@@ -82,13 +90,12 @@ export function CarouselComponent({ items }: CarouselComponentProps) {
                   <p className="text-sm items-center justify-center text-gray-900 line-clamp-3">{item.description}</p>
                 </CardContent>
               </Card>
-
-              
             </div>
           ))}
         </div>
       </div>
 
+      {/* Botões de navegação personalizados */}
       <Button
         variant="outline"
         size="icon"
