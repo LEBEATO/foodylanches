@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import dataProduscts from "@/app/api/dataProduscts";
 import MenuSection from "@/components/MenuSection";
 import XFrangosPage from "@/app/xfrangos/page";
+import CardapioPage from "@/app/burguer/page";
 
 // --- Interfaces para Tipagem ---
 export interface Product {
@@ -102,7 +103,7 @@ export default function Home() {
         addToCart={addToCart} 
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
-      <XFrangosPage />
+     
       
       <CartButton itemCount={cart.length} />
       <Footer />

@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
 
   // Dados fixos para o logo e nome da lanchonete
   const title = "Foody Lanches";
-  const imagesrc = "/logo.png";
+  const imagem = "/logo.png";
 
   // Função para fechar ambos os menus
   const closeAllMenus = () => {
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center pt-2 space-x-2 md:space-x-4">
         <div>
           <Image
-            src={imagesrc}
+            src={imagem}
             alt="Logo Foody Lanches"
             width={50}
             height={40}
@@ -84,9 +84,13 @@ const Navbar: React.FC = () => {
           </button>
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
+                
                  <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800       hover:bg-gray-500" role="menuitem">X-Frango</Link>
-                  <Link href="/XFrangosPage" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+
+                  <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+
                   <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
+
                   <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
             </div>
           )}
@@ -111,8 +115,9 @@ const Navbar: React.FC = () => {
               </button>
               {isMenuOpen && (
                 <div className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
-                  <Link href="/x-frangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
-                  <Link href="/x-burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+                  
+                  <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
+                  <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
                   <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
                   <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
                 </div>
