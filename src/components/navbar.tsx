@@ -1,37 +1,66 @@
  
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Ícones de hambúrguer e fechar
+import { FaBars, FaTimes } from 'react-icons/fa';
+import Link from 'next/link'; // Usaremos Link do Next.js para navegação
 
 const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Controla o dropdown do Cardápio (desktop e mobile)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Controla a abertura/fechamento do menu mobile completo
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Cria uma referência para o elemento do menu para verificar cliques
+  const menuRef = useRef<HTMLDivElement>(null); 
 
   // Dados fixos para o logo e nome da lanchonete
   const title = "Foody Lanches";
-  const imagesrc = "/logo.png"; // Certifique-se de que este caminho está correto para sua imagem!
+  const imagesrc = "/logo.png";
+
+  // Função para fechar ambos os menus
+  const closeAllMenus = () => {
+    setIsMenuOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+  
+  // useEffect para adicionar e remover o event listener de clique
+  useEffect(() => {
+    // Função que verifica se o clique foi fora do menu
+    const handleClickOutside = (event: MouseEvent) => {
+      // Se o menu estiver aberto e o clique for fora do menuRef
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        closeAllMenus();
+      }
+    };
+
+    // Adiciona o event listener quando o componente é montado
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Remove o event listener quando o componente é desmontado
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []); // O array vazio garante que o useEffect só rode uma vez
 
   return (
-    <div className="flex justify-between items-center w-full h-30 shadow-lg px-8 relative bg-white">
+    <div className="flex justify-between items-center w-full h-30 shadow-lg px-8 bg-white fixed top-0 inset-x-0 z-50" ref={menuRef}>
       {/* Seção Esquerda: Logo e Título */}
       <div className="flex items-center pt-2 space-x-2 md:space-x-4">
         <div>
-          {/* Logo: Reduz o tamanho em telas menores */}
           <Image
             src={imagesrc}
             alt="Logo Foody Lanches"
-            width={50} // Largura padrão para mobile
-            height={40} // Altura padrão para mobile
-            className="rounded-full md:w-[70px] md:h-[50px]" // Aumenta em telas médias e maiores
+            width={50}
+            height={40}
+            className="rounded-full md:w-[70px] md:h-[50px]"
           />
         </div>
-        {/* Título: Reduz o tamanho da fonte em telas menores */}
         <span className="text-base font-bold text-zinc-900 md:text-xl">
           {title}
         </span>
       </div>
 
-      {/* Ícone do Hambúrguer para Telas Menores (aparece apenas em mobile) */}
+      {/* Ícone do Hambúrguer para Telas Menores */}
       <div className="md:hidden">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -42,9 +71,8 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Seção Direita: Links de Navegação (Desktop) - Esconde em mobile */}
+      {/* Seção Direita: Links de Navegação (Desktop) */}
       <div className="hidden md:flex items-center space-x-6 relative">
-        {/* Cardápio (Menu) com Dropdown para Desktop */}
         <div className="relative">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -56,26 +84,22 @@ const Navbar: React.FC = () => {
           </button>
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
-              <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100" role="menuitem">X-Frango</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100" role="menuitem">X-Burguer</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100" role="menuitem">Porção</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100" role="menuitem">Refrigerante</a>
+                 <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800       hover:bg-gray-500" role="menuitem">X-Frango</Link>
+                  <Link href="/XFrangosPage" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+                  <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
+                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
             </div>
           )}
         </div>
-
-        {/* Sobre Nós link para Desktop */}
-        <a href="#" className="text-lg font-semibold text-zinc-800 hover:text-zinc-900">
+        <Link href="/sobre-nos" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900">
           Sobre Nós
-        </a>
+        </Link>
       </div>
 
-      {/* Menu Mobile (Dropdown completo para telas pequenas) */}
+      {/* Menu Mobile */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-2 z-20 transition-transform duration-300 ease-in-out transform origin-top">
-          {/* O conteúdo do menu mobile agora está DENTRO desta div */}
           <div className="flex flex-col items-center space-y-4 py-4">
-            {/* Cardápio (Menu) no Mobile */}
             <div className="w-full text-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -87,18 +111,16 @@ const Navbar: React.FC = () => {
               </button>
               {isMenuOpen && (
                 <div className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</a>
+                  <Link href="/x-frangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
+                  <Link href="/x-burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+                  <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
+                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
                 </div>
               )}
             </div>
-
-            {/* Sobre Nós link no Mobile */}
-            <a href="#" className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 w-full text-center py-2 ">
+            <Link href="/sobre-nos" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 w-full text-center py-2 ">
               Sobre Nós
-            </a>
+            </Link>
           </div>
         </div>
       )}

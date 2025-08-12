@@ -87,12 +87,12 @@ const handleWhatsOrderApp = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center gap-2 bg-slate-950 w-full p-2 md:p-4 ">
+      <div className="flex items-center justify-center gap-1 bg-slate-950 w-full p-2 md:p-4 ">
         <button onClick={backToHome} className="flex items-center gap-1 text-white">
           <IconCircleArrowLeftFilled size={50} color='#ffdd'/>
           <p className="text-zinc-100">Voltar</p>
         </button>
-        <div className="flex sm:flex-row items-center p-2 gap-6 md:mx-auto">
+        <div className="flex sm:flex-row items-center p-2 gap-4 md:mx-auto">
           <IconShoppingCartCopy size={40} color='white'/>
            <h1 className="text-lg md:text-xl font-bold text-zinc-100">Meu Carrinho</h1>
 </div>
@@ -108,7 +108,7 @@ const handleWhatsOrderApp = () => {
           <div key={item.id} className="flex items-center justify-around py-6 px-6 border-b rounded-md hover:bg-zinc-50 duration-75 transition-colors"> {/* Classe hover corrigida */}
             <img src={item.image} width={100} alt={item.name} />
             <div className='flex flex-col items-center ml-3'>
-            <span className='text-center text-zinc-100 font-bold' >{item.name} (Qtd: {item.quantity})</span>
+            <span className='text-center text-zinc-600 font-bold' >{item.name} (Qtd: {item.quantity})</span>
             <span className='text-red-400 font-bold '>R${(item.price * item.quantity).toFixed(2)}</span>
 
             <div className='gap-1 flex justify-around items-center bg-zinc-400 rounded-full'>
@@ -125,7 +125,7 @@ const handleWhatsOrderApp = () => {
 
           ))}
               <div className='md-6 ml-4 mr-4 space-y-4'> {/* Adicionado space-y-4 para espaçamento vertical consistente */}
-            <h2 className='flex items-center justify-center font-bold text-lg text-zinc-100 mb-4'>Dados de Entrega</h2>
+            <h2 className='flex items-center justify-center font-bold text-lg text-zinc-700 mb-4'>Dados de Entrega</h2>
 
             <div className='grid gap-2'>
               <Label htmlFor="name">Nome</Label>

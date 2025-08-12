@@ -1,51 +1,54 @@
 
-// components/MenuItems.tsx
 'use client';
 
 import { IconPlus } from "@tabler/icons-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Product } from "@/app/page"; // Importa a interface do arquivo principal
+import { Product } from "@/app/page";
 
-// A interface pode estender Product e adicionar a função addToCard
+// The interface can extend Product and add the addToCard function
 interface MenuItemsProps extends Product {
   addToCard: (id: number) => void;
 }
 
 const MenuItems = ({ id, name, description, price, image, addToCard }: MenuItemsProps) => {
   return (
-    // Removi as classes de grid, pois o layout será controlado pelo componente pai
-    <Card className="items-center justify-center space-x-0 
-    sm:space-x-5 mt-8 p-4 px-4 border-b duration-75 transition-colors hover:bg-orange-200 rounded-3xl">
-      <div className="relative flex items-center justify-center w-[180px] h-[110] overflow-hidden rounded-md mb-4 sm:mb-0">
+    <Card className="flex flex-col w-full h-full items-center p-4 overflow-auto hover:bg-orange-200 transition-colors duration-300">
+      {/* Image Section */}
+      <div className="w-[90px] h-[50px] sm:w-[150px] sm:h-[120px] mb-4 flex items-center justify-center">
         <Image
           src={image}
           alt={name}
-          width={140}
-          height={110}
-          className="object-cover w-[150px] h-[110px] rounded-md transition-transform duration-300 ease-in-out hover:scale-105"
+          width={90}
+          height={60}
+          layout="responsive"
+          objectFit="contain"
+          className="rounded-lg transition-transform duration-300 ease-in-out hover:scale-110"
         />
       </div>
 
-      <CardContent className="border-t pt-4 sm:pt-0 sm:border-t-0 sm:pl-4 p-0">
-        <div className="grid grid-cols-1 py-4 cursor-pointer">
-          <h2 className="text-xl sm:text-2xl font-bold text-zinc-900">
-            {name}
-          </h2>
-          <p className="text-sm text-gray-900">{description}</p>
-          <div className="flex flex-col sm:flex-row py-4 justify-between items-start sm:items-center">
-            <p className="text-lg font-semibold text-red-900 mb-2 sm:mb-0">
-              R${price.toFixed(2)}
-            </p>
-            <Button
-              onClick={() => addToCard(id)}
-              className="flex items-center gap-1 bg-green-900 rounded-md border border-zinc-900 px-2 py-1 text-sm text-black w-full sm:w-[100px] h-[30px] mx-auto"
-            >
-              <IconPlus size={16} stroke={2} />
-              <p>Adicionar</p>
-            </Button>
-          </div>
+      {/* Product Info Section */}
+      <CardContent className="grid grid-cols-1 gap-1 p-0 pt-1 text-center overflow-auto">
+        <h2 className=" text-sm sm:text-lg text-center font-bold text-gray-800 leading-tight">
+          {name}
+        </h2>
+        
+        {/* Description will now wrap onto multiple lines */}
+        <p className="mt-2 text-xs sm:text-sm text-center items-center justify-center text-gray-700">{description}</p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2  justify-center items-center mt-2 gap-2">
+          <p className="text-sm sm:text-lg font-semibold px-1 text-red-900">
+            R${price.toFixed(2)}
+          </p>
+          <Button
+           onClick={() => addToCard(id)}
+           className="py-4 px-10 bg-green-900 text-white rounded-md border border-zinc-900 "
+           >
+           <IconPlus size={16} stroke={2} className="text-white" />
+            Adicionar
+           </Button>
+           
         </div>
       </CardContent>
     </Card>

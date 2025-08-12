@@ -2,27 +2,30 @@
 // app/page.tsx
 'use client';
 
-import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
-import dataProduscts from "./api/page"; 
+import CarouselComponent from "@/components/CaroucelComponent";
 import CartButton from "@/components/CartButton";
-import MenuSection from "@/components/MenuSection"; 
-import CarouselComponent from "@/components/CaroucelComponent"; // Importação do carrossel
+import { useEffect, useState } from "react";
+import dataProduscts from "@/app/api/dataProduscts";
+import MenuSection from "@/components/MenuSection";
+import XFrangosPage from "@/app/xfrangos/page";
 
-// Defina as interfaces de forma exportável
+// --- Interfaces para Tipagem ---
 export interface Product {
   id: number;
   name: string;
   price: number;
   description: string;
   image: string;
+  category: string;
 }
 
 export interface CartItem extends Product {
   quantity: number;
 }
 
+// --- Componente Principal Home ---
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -38,7 +41,6 @@ export default function Home() {
   const addToCart = (id: number) => {
     const product = products.find((item) => item.id === id);
     if (!product) return;
-
     const existingProduct = cart.find((item) => item.id === id);
 
     let updatedCart: CartItem[];
@@ -53,18 +55,25 @@ export default function Home() {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
 
-  const layoutClasses = "grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8";
-
-  // Dummy data para o carrossel, se necessário
   const dummyCarouselItems = [
     {
       id: "1",
       imageSrc: "/burger-cheese.png",
-      title: "Delicioso Prato5",
-      description: "Uma descrição cativante sobre este prato incrível que você não pode perder.",
+      title: "Delicioso Prato 1",
+      description: "Uma descrição cativante sobre este prato incrível.",
     },
-    // ... adicione mais itens aqui
+    {
+      id: "2",
+      imageSrc: "/path/to/image2.jpg",
+      title: "Prato do Dia",
+      description: "Uma opção especial e saborosa para você.",
+    },
   ];
+
+  // Filtra os produtos para cada categoria usando os nomes corretos
+  const xburguerItems = products.filter(product => product.category === 'x-burguer');
+  const xfrangosItems = products.filter(product => product.category === 'x-frangos');
+  const bebidasItems = products.filter(product => product.category === 'bebidas');
 
   return (
     <main>
@@ -73,27 +82,29 @@ export default function Home() {
         title="Foody Lanches"
         description="O melhor lugar para saborear lanches deliciosos!"
       />
-      
-      {/* Exibir o carrossel na HomePage */}
-      <CarouselComponent items={dummyCarouselItems} /> 
+      <CarouselComponent items={dummyCarouselItems} />
 
-      {/* Renderizar as seções de cardápio, passando os produtos e a função addToCart */}
       <MenuSection 
-        title="Nosso Cardápio" 
-        products={products} 
+        title="X-Burguer" 
+        products={xburguerItems} // Usando a categoria correta
         addToCart={addToCart} 
-        layoutClasses={layoutClasses} 
+        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
-      
       <MenuSection 
         title="X-frangos" 
-        products={products} 
+        products={xfrangosItems} // Usando a categoria correta
         addToCart={addToCart} 
-        layoutClasses={layoutClasses} 
+        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
-
-      <CartButton itemCount={cart.length} />
+      <MenuSection 
+        title="Bebidas" 
+        products={bebidasItems} // Usando a categoria correta
+        addToCart={addToCart} 
+        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
+      />
+      <XFrangosPage />
       
+      <CartButton itemCount={cart.length} />
       <Footer />
     </main>
   );

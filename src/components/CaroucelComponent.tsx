@@ -64,7 +64,7 @@ export function CarouselComponent() {
   }, [emblaApi]);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-8">
+    <div className="relative w-full max-w-5xl mx-auto py-8 mt-20">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y -ml-4 min-w-0">
           {/* Mapeia e renderiza cada item do array 'carouselItemsData' */}
@@ -99,7 +99,7 @@ export function CarouselComponent() {
       <Button
         variant="outline"
         size="icon"
-        className="absolute top-1/2 -translate-y-1/2 left-4 sm:-left-4 bg-slate-300 z-10 hidden sm:flex"
+        className="absolute top-1/2 -translate-y-1/2 left-4 sm:-left-4 bg-slate-400 z-10 hidden sm:flex"
         onClick={scrollPrev}
       >
         {"<"}
@@ -107,7 +107,7 @@ export function CarouselComponent() {
       <Button
         variant="outline"
         size="icon"
-        className="absolute top-1/2 -translate-y-1/2 -right-4 bg-slate-300 z-10 hidden sm:flex"
+        className="absolute top-1/2 -translate-y-1/2 -right-4 bg-slate-400 z-10 hidden sm:flex"
         onClick={scrollNext}
       >
         {">"}
