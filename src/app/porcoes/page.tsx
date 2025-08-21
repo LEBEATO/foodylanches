@@ -33,13 +33,13 @@ export default function BebidasPage() {
       try {
         const cardapioCollection = collection(db, "cardapio");
         const cardapioSnapshot = await getDocs(cardapioCollection);
-
+        
         const productsList = cardapioSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data() as Omit<Product, 'id'>
         }));
-
-        const filteredProducts = productsList.filter(p => p.category === 'x-burguer');
+        
+        const filteredProducts = productsList.filter(p => p.category === 'porcao');
         setProducts(filteredProducts);
         setIsLoading(false);
       } catch (e) {
@@ -47,7 +47,7 @@ export default function BebidasPage() {
         setIsLoading(false);
       }
     };
-
+    
     fetchProducts();
 
     const storedCart = localStorage.getItem('cart');
@@ -73,9 +73,9 @@ export default function BebidasPage() {
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
-
+  
   const layoutClasses = "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 mx-auto max-w-7xl px-2 mb-16";
-
+  
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -88,16 +88,16 @@ export default function BebidasPage() {
     <main className="pt-2">
       <div className="fixed top-0 left-0 w-full z-50 p-8 pt-4">
         <Link href="/" className="flex items-center gap-1">
-          <IconCircleArrowLeftFilled size={50} color='#020202dd' />
+          <IconCircleArrowLeftFilled size={50} color='#020202dd'/>
           <span className="text-zinc-900 font-bold">Voltar</span>
         </Link>
       </div>
       <div className="pt-24">
-        <MenuSection
-          title="Bebidas"
-          products={products}
-          addToCart={addToCart}
-          layoutClasses={layoutClasses}
+        <MenuSection 
+          title="porcao" 
+          products={products} 
+          addToCart={addToCart} 
+          layoutClasses={layoutClasses} 
         />
       </div>
       <CartButton itemCount={cart.length} />

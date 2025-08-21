@@ -39,7 +39,7 @@ export default function BebidasPage() {
           ...doc.data() as Omit<Product, 'id'>
         }));
 
-        const filteredProducts = productsList.filter(p => p.category === 'x-burguer');
+        const filteredProducts = productsList.filter(p => p.category === 'bebidas');
         setProducts(filteredProducts);
         setIsLoading(false);
       } catch (e) {

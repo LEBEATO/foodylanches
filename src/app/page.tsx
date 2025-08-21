@@ -1,20 +1,18 @@
 
-// app/page.tsx
 'use client';
 
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
-import CarouselComponent from "@/components/CaroucelComponent";
+// ✅ IMPORTAÇÃO CORRETA: Sem chaves.
+import CarouselComponent from "@/components/CaroucelComponent"; 
 import CartButton from "@/components/CartButton";
 import { useEffect, useState } from "react";
-import dataProduscts from "@/app/api/dataProduscts";
 import MenuSection from "@/components/MenuSection";
-import XFrangosPage from "@/app/xfrangos/page";
-import CardapioPage from "@/app/burguer/page";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
-// --- Interfaces para Tipagem ---
 export interface Product {
-  id: number;
+  id: string; 
   name: string;
   price: number;
   description: string;
@@ -22,25 +20,56 @@ export interface Product {
   category: string;
 }
 
+export interface CarouselItem {
+  id: string;
+  imageSrc: string;
+  description: string;
+  title: string;
+}
+
 export interface CartItem extends Product {
   quantity: number;
 }
 
-// --- Componente Principal Home ---
 export default function Home() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [cardapioItems, setCardapioItems] = useState<Product[]>([]);
+  const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setProducts(dataProduscts); 
+    const fetchAllData = async () => {
+      try {
+        const cardapioSnapshot = await getDocs(collection(db, "cardapio"));
+        const cardapioList = cardapioSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data() as Omit<Product, 'id'>
+        }));
+        setCardapioItems(cardapioList);
+
+        const carouselSnapshot = await getDocs(collection(db, "produtos"));
+        const carouselList = carouselSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data() as Omit<CarouselItem, 'id'>
+        }));
+        setCarouselItems(carouselList);
+
+        setIsLoading(false);
+      } catch (e) {
+        console.error("Erro ao buscar documentos:", e);
+        setIsLoading(false);
+      }
+    };
+    fetchAllData();
+
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       setCart(JSON.parse(storedCart));
     }
   }, []);
 
-  const addToCart = (id: number) => {
-    const product = products.find((item) => item.id === id);
+  const addToCart = (id: string) => {
+    const product = cardapioItems.find((item) => item.id === id);
     if (!product) return;
     const existingProduct = cart.find((item) => item.id === id);
 
@@ -56,54 +85,50 @@ export default function Home() {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
 
-  const dummyCarouselItems = [
-    {
-      id: "1",
-      imageSrc: "/burger-cheese.png",
-      title: "Delicioso Prato 1",
-      description: "Uma descrição cativante sobre este prato incrível.",
-    },
-    {
-      id: "2",
-      imageSrc: "/path/to/image2.jpg",
-      title: "Prato do Dia",
-      description: "Uma opção especial e saborosa para você.",
-    },
-  ];
+  const xburguerItems = cardapioItems.filter(product => product.category === 'x-burguer');
+  const xfrangosItems = cardapioItems.filter(product => product.category === 'x-frangos');
+  const porcaoItems = cardapioItems.filter(product => product.category === 'porcao');
+  const bebidasItems = cardapioItems.filter(product => product.category === 'bebidas');
 
-  // Filtra os produtos para cada categoria usando os nomes corretos
-  const xburguerItems = products.filter(product => product.category === 'x-burguer');
-  const xfrangosItems = products.filter(product => product.category === 'x-frangos');
-  const bebidasItems = products.filter(product => product.category === 'bebidas');
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Carregando...</p>
+      </div>
+    );
+  }
 
   return (
     <main>
       <Navbar
         imagesrc="/logo.png"
         title="Foody Lanches"
-        description="O melhor lugar para saborear lanches deliciosos!"
       />
-      <CarouselComponent items={dummyCarouselItems} />
+      <CarouselComponent items={carouselItems} />
 
       <MenuSection 
         title="X-Burguer" 
-        products={xburguerItems} // Usando a categoria correta
+        products={xburguerItems}
         addToCart={addToCart} 
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       <MenuSection 
         title="X-frangos" 
-        products={xfrangosItems} // Usando a categoria correta
+        products={xfrangosItems}
         addToCart={addToCart} 
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       <MenuSection 
+        title="Porçoes" 
+        products={porcaoItems}
+        addToCart={addToCart} 
+        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"/>
+      <MenuSection 
         title="Bebidas" 
-        products={bebidasItems} // Usando a categoria correta
+        products={bebidasItems}
         addToCart={addToCart} 
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
-     
       
       <CartButton itemCount={cart.length} />
       <Footer />

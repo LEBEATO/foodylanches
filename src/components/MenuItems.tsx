@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Product } from "@/app/page";
-import Link from "next/link";
+
 
 
 // A interface pode estender Product e adicionar a função addToCard
@@ -42,7 +42,7 @@ const MenuItems = ({ id, name, description, price, image, addToCard }: MenuItems
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 justify-center items-center mt-2 gap-2">
             <p className="text-sm sm:text-lg font-semibold px-1 text-red-900">
-              R${price.toFixed(2)}
+              R${parseFloat(price.toString()).toFixed(2)}
             </p>
             <Button
               onClick={() => addToCard(id)}
