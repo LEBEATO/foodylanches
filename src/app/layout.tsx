@@ -6,6 +6,23 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Foody Lanches",
   description: "O melhor lugar para saborear lanches deliciosos!",
+  keywords:["lanches", "comida", "restaurante", "fast food", "hambúrgueres", "sanduíches", "batatas fritas", "sucos", "refeições rápidas"],
+ 
+  openGraph: {
+    title: "Foody Lanches - O melhor lugar para saborear lanches deliciosos!",
+    description: "O melhor lugar para saborear lanches deliciosos!",
+    url: "/logo.png",
+    siteName: "Foody Lanches",
+    images: [
+      { 
+        url: "/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "pt-BR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

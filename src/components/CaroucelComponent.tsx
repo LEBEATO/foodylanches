@@ -1,47 +1,25 @@
 
-'use client';
-
+'use client'
+import React from "react";
 import Image from "next/image";
-import * as React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
-// Dados dos cards do carrossel. Você pode adicionar mais aqui.
-const carouselItemsData = [
-  {
-    id: "1",
-    imageSrc: "/burger-cheese.png",
-    description: "Descrição do Card 1.",
-    title: "Título do Card 1",
-  },
-  {
-    id: "2",
-    imageSrc: "/frangao-tudo.png",
-    description: "Descrição do Card 2.",
-    title: "Título do Card 2",
-  },
-  {
-    id: "3",
-    imageSrc: "/frango-catupiry.png",
-    description: "Descrição do Card 3.",
-    title: "Título do Card 3",
-  },
-  {
-    id: "4",
-    imageSrc: "/frangao-tudo.png",
-    description: "Descrição do Card 4.",
-    title: "Título do Card 4",
-  },
-];
+interface CarouselItem {
+  id: string;
+  imageSrc: string; 
+  description: string;
+  title: string;
+}
 
-// O tipo de dados para cada item do carrossel
+interface CarouselComponentProps {
+    items: CarouselItem[]; 
+}
 
 
-// O componente principal do carrossel
-export function CarouselComponent() {
-  // Configuração do plugin Autoplay
+function CarouselComponent({ items }: CarouselComponentProps) { 
   const autoplayOptions = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: false })
   ).current;
@@ -63,39 +41,39 @@ export function CarouselComponent() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  return (
+  if (!items || items.length === 0) {
+    // Retorne null ou uma mensagem para não causar erro quando os dados ainda não estiverem carregados
+    return null;
+  }
+
+return (
     <div className="relative w-full max-w-5xl mx-auto py-8 mt-20">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y -ml-4 min-w-0">
-          {/* Mapeia e renderiza cada item do array 'carouselItemsData' */}
-          {carouselItemsData.map((item) => (
+          {items.map((item) => (
             <div
               key={item.id}
               className="pl-4 flex-grow-0 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/3 flex flex-col items-center"
             >
-              <Card className="w-52 h-56 items-center justify-center shadow-lg rounded-lg overflow-hidden cursor-pointer flex flex-col mt-2">
-                <div className="w-[80px] h-[60px] mt-4 relative">
+              <Card className="w-full max-w-xs h-[300px] shadow-lg rounded-lg overflow-hidden cursor-pointer relative">
+                <div className="w-full h-full relative">
                   <Image
-                    src={item.imageSrc}
+                    src={item.imageSrc} 
                     alt={item.title}
                     fill
-                    className="object-cover rounded-t-lg"
+                    className="object-cover rounded-lg"
                   />
-                </div>
-                
-                <CardContent className="p-2 flex-grow">
-                  <div className="mb-1">
-                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-3">{item.title}</h3>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10 flex flex-col items-center justify-center h-full bg-gradient-to-t from-black/70 via-black/30 to-transparent text-center">
+                    <div className="w-full">
+                        <h3 className="text-2xl font-bold">{item.title}</h3>
+                        <p className="text-lg mt-2 text-wrap">{item.description}</p></div>
                   </div>
-                  <p className="text-sm items-center justify-center text-gray-900 line-clamp-3">{item.description}</p>
-                </CardContent>
+                </div>
               </Card>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Botões de navegação personalizados */}
       <Button
         variant="outline"
         size="icon"
@@ -115,5 +93,6 @@ export function CarouselComponent() {
     </div>
   );
 }
+
 
 export default CarouselComponent;

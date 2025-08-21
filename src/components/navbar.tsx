@@ -1,46 +1,44 @@
  
+// src/components/navbar.tsx
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import Link from 'next/link'; // Usaremos Link do Next.js para navegação
+import Link from 'next/link';
 
-const Navbar: React.FC = () => {
+// 1. Defina a interface para as propriedades do Navbar, removendo 'description'
+export interface NavbarProps {
+  imagesrc: string;
+  title: string;
+}
+
+// 2. Modifique o componente para receber e usar as props
+const Navbar: React.FC<NavbarProps> = ({ imagesrc, title }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Cria uma referência para o elemento do menu para verificar cliques
   const menuRef = useRef<HTMLDivElement>(null); 
 
-  // Dados fixos para o logo e nome da lanchonete
-  const title = "Foody Lanches";
-  const imagem = "/logo.png";
-
-  // Função para fechar ambos os menus
   const closeAllMenus = () => {
     setIsMenuOpen(false);
     setIsMobileMenuOpen(false);
   };
   
-  // useEffect para adicionar e remover o event listener de clique
   useEffect(() => {
-    // Função que verifica se o clique foi fora do menu
     const handleClickOutside = (event: MouseEvent) => {
-      // Se o menu estiver aberto e o clique for fora do menuRef
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         closeAllMenus();
       }
     };
 
-    // Adiciona o event listener quando o componente é montado
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Remove o event listener quando o componente é desmontado
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []); // O array vazio garante que o useEffect só rode uma vez
+  }, []);
 
   return (
     <div className="flex justify-between items-center w-full h-30 shadow-lg px-8 bg-white fixed top-0 inset-x-0 z-50" ref={menuRef}>
@@ -48,15 +46,15 @@ const Navbar: React.FC = () => {
       <div className="flex items-center pt-2 space-x-2 md:space-x-4">
         <div>
           <Image
-            src={imagem}
-            alt="Logo Foody Lanches"
+            src={imagesrc} // Usa a prop imagesrc
+            alt={title}   // Usa a prop title
             width={50}
             height={40}
             className="rounded-full md:w-[70px] md:h-[50px]"
           />
         </div>
         <span className="text-base font-bold text-zinc-900 md:text-xl">
-          {title}
+          {title} 
         </span>
       </div>
 
@@ -84,18 +82,14 @@ const Navbar: React.FC = () => {
           </button>
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
-                
-                 <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800       hover:bg-gray-500" role="menuitem">X-Frango</Link>
-
-                  <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
-
-                  <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
-
-                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
+              <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
+              <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
+              <Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porções</Link>
+              <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Bebidas</Link>
             </div>
           )}
         </div>
-        <Link href="/sobre-nos" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900">
+        <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900">
           Sobre Nós
         </Link>
       </div>
@@ -115,15 +109,14 @@ const Navbar: React.FC = () => {
               </button>
               {isMenuOpen && (
                 <div className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
-                  
                   <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
                   <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
-                  <Link href="/porcao" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porção</Link>
-                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Refrigerante</Link>
+                  <Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porções</Link>
+                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Bebidas</Link>
                 </div>
               )}
             </div>
-            <Link href="/sobre-nos" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 w-full text-center py-2 ">
+            <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 w-full text-center py-2 ">
               Sobre Nós
             </Link>
           </div>

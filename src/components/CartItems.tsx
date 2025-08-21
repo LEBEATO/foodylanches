@@ -8,8 +8,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea'; // Assumindo que você pretendia usar Textarea em algum lugar para observações
 
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
 const CartItems = () => {
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [total, setTotal] = useState(0);
   const [fields, setFields] = useState({
     name: '',
@@ -53,10 +61,6 @@ const handleDecrement = (id: number) => {
 }
 
 //whatsapp//
-const isOpen = () => {
-  const currentHour = new Date().getHours(); // Alterado currentHost para currentHour para maior clareza
-  return currentHour >= 18 && currentHour < 24;
-}
 
 const handleWhatsOrderApp = () => {
   // Descomente e ajuste se quiser impor o horário de funcionamento

@@ -1,14 +1,13 @@
-
 'use client';
 
-import MenuItems from "./MenuItems";
+import MenuItems from "@/components/MenuItems";
 import { Product } from "@/app/page"; // Importação correta da interface Product
 import Link from "next/link";
 
 interface MenuSectionProps {
   title: string;
   products: Product[];
-  addToCard: (id:number) => void;
+  addToCard: (id: string) => void; // <-- Corrija aqui para string
   layoutClasses: string;
 }
 
