@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
 'use client';
 
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
+<<<<<<< HEAD
+=======
+// ✅ IMPORTAÇÃO CORRETA: Sem chaves.
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
 import CarouselComponent from "@/components/CaroucelComponent"; 
 import CartButton from "@/components/CartButton";
 import { useEffect, useState } from "react";
@@ -107,24 +115,40 @@ export default function Home() {
       <MenuSection 
         title="X-Burguer" 
         products={xburguerItems}
+<<<<<<< HEAD
         addToCard={addToCart} 
+=======
+        addToCart={addToCart} 
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       <MenuSection 
         title="X-frangos" 
         products={xfrangosItems}
+<<<<<<< HEAD
         addToCard={addToCart} 
+=======
+        addToCart={addToCart} 
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       <MenuSection 
         title="Porçoes" 
         products={porcaoItems}
+<<<<<<< HEAD
         addToCard={addToCart} 
+=======
+        addToCart={addToCart} 
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"/>
       <MenuSection 
         title="Bebidas" 
         products={bebidasItems}
+<<<<<<< HEAD
         addToCard={addToCart} 
+=======
+        addToCart={addToCart} 
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       
