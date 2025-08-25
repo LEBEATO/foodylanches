@@ -117,8 +117,13 @@ export default function AboutPage() {
 
                             {/* Endereço */}
 
+<<<<<<< HEAD
 
                           <div className="flex items-center space-x-2">
+=======
+Alares Alexandre, [16/08/2025 15:09]
+<div className="flex items-center space-x-2">
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
                                 {/* Ícone de Localização */}
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

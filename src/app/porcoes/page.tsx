@@ -78,7 +78,7 @@ export default function BebidasPage() {
   
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center font-bold text-2xl text-zinc-900 h-screen">
+      <div className="flex justify-center items-center h-screen">
         <p>Carregando bebidas...</p>
       </div>
     );

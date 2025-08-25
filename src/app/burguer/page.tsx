@@ -78,7 +78,11 @@ export default function BebidasPage() {
 
   if (isLoading) {
     return (
+<<<<<<< HEAD
       <div className="flex justify-center items-center font-bold text-2xl text-zinc-900 h-screen">
+=======
+      <div className="flex justify-center items-center h-screen">
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         <p>Carregando bebidas...</p>
       </div>
     );
@@ -94,7 +98,11 @@ export default function BebidasPage() {
       </div>
       <div className="pt-24">
         <MenuSection
+<<<<<<< HEAD
           title="X-Burguer"
+=======
+          title="Bebidas"
+>>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
           products={products}
           addToCart={addToCart}
           layoutClasses={layoutClasses}
