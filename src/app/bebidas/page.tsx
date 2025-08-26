@@ -82,7 +82,8 @@ export default function BebidasPage() {
         />
       </div>
     
-     
+      <CartButton  itemCount={itemCount}
+      />
       <Footer />
     </main>
   );
