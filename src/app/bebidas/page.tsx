@@ -81,8 +81,8 @@ export default function BebidasPage() {
           layoutClasses={layoutClasses}
         />
       </div>
-      {/* 5. Use o itemCount do contexto para mostrar a quantidade de itens */}
-      <CartButton itemCount={itemCount} />
+    
+     
       <Footer />
     </main>
   );
