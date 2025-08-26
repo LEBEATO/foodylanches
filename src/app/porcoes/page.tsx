@@ -1,4 +1,3 @@
-
 'use client';
 import { IconCircleArrowLeftFilled } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -8,8 +7,6 @@ import MenuSection from "@/components/MenuSection";
 import Link from "next/link";
 import { db } from "@/lib/firebase"; // Importe o db do Firebase
 import { collection, getDocs } from "firebase/firestore";
-
-// A interface Product agora tem o ID como string
 export interface Product {
   id: string;
   name: string;
@@ -78,35 +75,28 @@ export default function BebidasPage() {
   
   if (isLoading) {
     return (
-<<<<<<< HEAD
-      <div className="flex justify-center items-center h-screen">
-=======
-<<<<<<< HEAD
-      <div className="flex justify-center items-center font-bold text-2xl text-zinc-900 h-screen">
-=======
-      <div className="flex justify-center items-center h-screen">
->>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
->>>>>>> a2af7b880220c9f3a46c861d4884906b932ca488
-        <p>Carregando bebidas...</p>
-      </div>
+
+<div className="flex justify-center items-center h-screen">
+  <p>Carregando bebidas...</p>
+</div>
     );
   }
 
   return (
     <main className="pt-2">
       <div className="fixed top-0 left-0 w-full z-50 p-8 pt-4">
-        <Link href="/" className="flex items-center gap-1">
-          <IconCircleArrowLeftFilled size={50} color='#020202dd'/>
-          <span className="text-zinc-900 font-bold">Voltar</span>
-        </Link>
+      <Link href="/" className="flex items-center gap-1">
+        <IconCircleArrowLeftFilled size={50} color='#020202dd'/>
+        <span className="text-zinc-900 font-bold">Voltar</span>
+      </Link>
       </div>
       <div className="pt-24">
-        <MenuSection 
-          title="porcao" 
-          products={products} 
-          addToCart={addToCart} 
-          layoutClasses={layoutClasses} 
-        />
+      <MenuSection 
+        title="porcao" 
+        products={products} 
+        addToCart={addToCart} 
+        layoutClasses={layoutClasses} 
+      />
       </div>
       <CartButton itemCount={cart.length} />
       <Footer />

@@ -1,13 +1,14 @@
-
 'use client';
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
-import CarouselComponent from "@/components/CaroucelComponent"; 
+import CarouselComponent from "@/components/CaroucelComponent";
 import CartButton from "@/components/CartButton";
 import { useEffect, useState } from "react";
 import MenuSection from "@/components/MenuSection";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useCart } from "@/components/CartContext"; 
+
 export interface Product {
   id: string; 
   name: string;
@@ -24,15 +25,11 @@ export interface CarouselItem {
   title: string;
 }
 
-export interface CartItem extends Product {
-  quantity: number;
-}
-
 export default function Home() {
   const [cardapioItems, setCardapioItems] = useState<Product[]>([]);
   const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { addToCart } = useCart(); 
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -58,29 +55,7 @@ export default function Home() {
       }
     };
     fetchAllData();
-
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
   }, []);
-
-  const addToCart = (id: string) => {
-    const product = cardapioItems.find((item) => item.id === id);
-    if (!product) return;
-    const existingProduct = cart.find((item) => item.id === id);
-
-    let updatedCart: CartItem[];
-    if (existingProduct) {
-      updatedCart = cart.map(item =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-    } else {
-      updatedCart = [...cart, { ...product, quantity: 1 }];
-    }
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  }
 
   const xburguerItems = cardapioItems.filter(product => product.category === 'x-burguer');
   const xfrangosItems = cardapioItems.filter(product => product.category === 'x-frangos');
@@ -90,7 +65,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p>Carregando...</p>
+        <p className="text-2xl font-bold text-zinc-900 "> Carregando...</p>
       </div>
     );
   }
@@ -112,34 +87,22 @@ export default function Home() {
       <MenuSection 
         title="X-frangos" 
         products={xfrangosItems}
-<<<<<<< HEAD
-        addToCard={addToCart} 
-=======
         addToCart={addToCart} 
->>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
       <MenuSection 
-        title="Porçoes" 
+        title="Porções" 
         products={porcaoItems}
-<<<<<<< HEAD
-        addToCard={addToCart} 
-=======
         addToCart={addToCart} 
->>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
-        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"/>
+        layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
+      />
       <MenuSection 
         title="Bebidas" 
         products={bebidasItems}
-<<<<<<< HEAD
-        addToCard={addToCart} 
-=======
         addToCart={addToCart} 
->>>>>>> f290f774967c8de4414563c1fc7c395cbf609ab2
         layoutClasses="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-4 mx-auto max-w-7xl px-2 mb-8"
       />
-      
-      <CartButton itemCount={cart.length} />
+      <CartButton />
       <Footer />
     </main>
   );

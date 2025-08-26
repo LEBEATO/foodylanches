@@ -1,18 +1,16 @@
-
 'use client';
-
 import MenuItems from "./MenuItems";
-import { Product } from "@/app/page"; // Importação correta da interface Product
+import { Product } from "@/app/page";
 import Link from "next/link";
 
 interface MenuSectionProps {
   title: string;
   products: Product[];
-  addToCard: (id:number) => void;
+  addToCart: (product: Product) => void; 
   layoutClasses: string;
 }
 
-const MenuSection = ({ title, products, addToCard, layoutClasses }: MenuSectionProps) => (
+const MenuSection = ({ title, products, addToCart, layoutClasses }: MenuSectionProps) => (
   <div className="p-8">
     <Link href="/xfrangos" className="block mb-8">
       <h2 className="font-bold text-center mb-12 text-gray-800 dark:text-white relative">
@@ -29,7 +27,8 @@ const MenuSection = ({ title, products, addToCard, layoutClasses }: MenuSectionP
           description={product.description}
           price={product.price}
           image={product.image}
-          addToCard={addToCard}
+          category={product.category}
+          addToCart={addToCart}
         />
       ))}
     </div>

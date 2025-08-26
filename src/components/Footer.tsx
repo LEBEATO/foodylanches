@@ -1,6 +1,5 @@
 import {IconHeart} from '@tabler/icons-react';
 
-
 const Footer = () => {
     return (
         <footer className="px-5 py-2 bg-slate-950 overflow-x-hidden ">

@@ -1,12 +1,9 @@
- 
-// src/components/navbar.tsx
-
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
+import { Button } from "@/components/ui/button";
 
 // 1. Defina a interface para as propriedades do Navbar, removendo 'description'
 export interface NavbarProps {
@@ -54,68 +51,69 @@ const Navbar: React.FC<NavbarProps> = ({ imagesrc, title }) => {
           />
         </div>
         <span className="text-base font-bold text-zinc-900 md:text-xl">
-          {title} 
+          {title}
         </span>
       </div>
 
       {/* Ícone do Hambúrguer para Telas Menores */}
       <div className="md:hidden">
-        <button
+        <Button
+          type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-2xl text-zinc-700 focus:outline-none"
           aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
         >
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        </Button>
       </div>
 
       {/* Seção Direita: Links de Navegação (Desktop) */}
-      <div className="hidden md:flex items-center space-x-6 relative">
+      <div className="hidden md:flex space-x-4">
         <div className="relative">
-          <button
+          <Button
+            type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-lg font-semibold text-zinc-700 hover:text-zinc-900 focus:outline-none"
-            aria-expanded={isMenuOpen}
+            className="text-lg font-semibold text-zinc-400 hover:text-zinc-700 focus:outline-none"
+            aria-expanded={isMenuOpen ? 'true' : 'false'}
             aria-haspopup="true"
           >
             Cardápio
-          </button>
+          </Button>
           {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
-              <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
-              <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
-              <Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porções</Link>
-              <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Bebidas</Link>
-            </div>
+            <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
+              <li role="menuitem"><Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frango</Link></li>
+              <li role="menuitem"><Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Burguer</Link></li>
+              <li role="menuitem"><Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Porções</Link></li>
+              <li role="menuitem"><Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Bebidas</Link></li>
+            </ul>
           )}
         </div>
-        <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900">
+        <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-500 hover:text-zinc-900">
           Sobre Nós
         </Link>
       </div>
 
       {/* Menu Mobile */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-2 z-20 transition-transform duration-300 ease-in-out transform origin-top">
-          <div className="flex flex-col items-center space-y-4 py-4">
-            <div className="w-full text-center">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 focus:outline-none w-full py-2"
-                aria-expanded={isMenuOpen}
-                aria-haspopup="true"
-              >
-                Cardápio
-              </button>
-              {isMenuOpen && (
-                <div className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
-                  <Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Frango</Link>
-                  <Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">X-Burguer</Link>
-                  <Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Porções</Link>
-                  <Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500" role="menuitem">Bebidas</Link>
-                </div>
-              )}
-            </div>
+        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-md rounded-md p-4">
+          <div className="w-full text-center">
+            <Button
+              type="button"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-lg font-semibold text-zinc-400 hover:text-zinc-500 focus:outline-none w-full py-2"
+              aria-expanded={isMenuOpen ? 'true' : 'false'}
+              aria-haspopup="true"
+            >
+              Cardápio
+            </Button>
+            {isMenuOpen && (
+              <ul className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
+                <li role="menuitem"><Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frango</Link></li>
+                <li role="menuitem"><Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Burguer</Link></li>
+                <li role="menuitem"><Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Porções</Link></li>
+                <li role="menuitem"><Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Bebidas</Link></li>
+              </ul>
+            )}
             <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-800 hover:text-zinc-900 w-full text-center py-2 ">
               Sobre Nós
             </Link>

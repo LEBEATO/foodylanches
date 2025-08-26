@@ -1,15 +1,13 @@
+'use client';
 import {IconShoppingCartCopy} from '@tabler/icons-react';
 import Link from 'next/link';
+import { useCart } from './CartContext'; 
 
-type ItemCountProps = {
-    itemCount: number;
-}
+const CartButton = () => {
+    const { itemCount } = useCart(); 
 
-const CartButton = ({itemCount}:ItemCountProps) => {
     return (
-      
-       <Link href="/Cart">
-
+      <Link href="/Cart">
          <div className='fixed z-40 top-0 p-3 mt-36 bg-transparent '> 
             <div className='flex justify-center p-4 '>
               <IconShoppingCartCopy color="#6e6666" size={40} stroke={2} />
@@ -22,11 +20,9 @@ const CartButton = ({itemCount}:ItemCountProps) => {
                     w-[30px] h-[30px]
                     rounded-full">{itemCount}</div>
              </div> 
-                 </div>
-         </Link>
-
-          
-   
-    )
+         </div>
+      </Link>
+    );
 }
+
 export default CartButton;
