@@ -1,9 +1,4 @@
-
-// lib/firebase.ts ou utils/firebase.ts
-
-// lib/firebase.ts ou utils/firebase.ts
-
-// Importe as funções que você precisa do SDKs
+// src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from 'firebase/auth'; // Exemplo para autenticação

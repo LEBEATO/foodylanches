@@ -1,29 +1,25 @@
+// src/app/bebidas/page.tsx
+
 'use client';
-import { IconCircleArrowLeftFilled } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import Footer from "@/components/Footer";
 import CartButton from "@/components/CartButton";
 import MenuSection from "@/components/MenuSection";
-import Link from "next/link";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { useCart } from "@/components/CartContext" // Certifique-se de que o caminho está correto
+import { useCart } from "@/components/CartContext" 
+import Navbar from "@/app/navbar/page";
+import { Product } from "@/types"; // Importe a interface do arquivo types.ts
 
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  category: string;
+export interface NavbarProps {
+  imagesrc: string;
+  title: string;
 }
 
 export default function BebidasPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 1. Substitua a lógica de estado local do carrinho pelo hook useCart
-  const { addToCart, itemCount } = useCart();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,10 +42,8 @@ export default function BebidasPage() {
     };
 
     fetchProducts();
-    // 2. Remova a leitura do localStorage aqui, pois o CartProvider já faz isso
   }, []);
 
-  // 3. Modifique a função para receber o objeto completo do produto, não apenas o ID
   const handleAddToCart = (product: Product) => {
     addToCart(product);
   }
@@ -67,24 +61,20 @@ export default function BebidasPage() {
   return (
     <main className="pt-2">
       <div className="fixed top-0 left-0 w-full z-50 p-8 pt-4">
-        <Link href="/" className="flex items-center gap-1">
-          <IconCircleArrowLeftFilled size={50} color='#020202dd' />
-          <span className="text-zinc-900 font-bold">Voltar</span>
-        </Link>
+       <Navbar
+        imagesrc="/logo.png"
+        title="Foody Lanches"
+       />
       </div>
       <div className="pt-24">
         <MenuSection
           title="Bebidas"
           products={products}
-          // 4. Passe a nova função handleAddToCart para o MenuSection
           addToCart={handleAddToCart}
           layoutClasses={layoutClasses}
         />
       </div>
-    
-      <CartButton  itemCount={itemCount}
-      />
-      <Footer />
+      <CartButton />
     </main>
   );
 }

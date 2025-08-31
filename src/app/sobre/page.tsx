@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { IconCircleArrowLeftFilled } from "@tabler/icons-react"; 
 
-export default function AboutPage() {
+export default function Sobre() {
 
     const whatsappUrl = "https://wa.me/5535992640014";
     const phoneNumber = "(35) 99264-0014";

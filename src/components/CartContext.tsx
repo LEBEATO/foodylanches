@@ -1,11 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
-import { Product } from '@/app/page';
-
-export interface CartItem extends Product {
-  quantity: number;
-}
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Product, CartItem } from "@/types/types"
 
 interface CartContextType {
   cart: CartItem[];
@@ -18,20 +14,22 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // Apenas no lado do cliente, ler do localStorage
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
+    if (typeof window !== 'undefined') {
+      const storedCart = localStorage.getItem('cart');
+      if (storedCart) {
+        setCart(JSON.parse(storedCart));
+      }
     }
   }, []);
 
   useEffect(() => {
-    // Apenas no lado do cliente, salvar no localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
   }, [cart]);
 
   const addToCart = (product: Product) => {

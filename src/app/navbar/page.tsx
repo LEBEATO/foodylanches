@@ -81,14 +81,15 @@ const Navbar: React.FC<NavbarProps> = ({ imagesrc, title }) => {
           </Button>
           {isMenuOpen && (
             <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
-              <li role="menuitem"><Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frango</Link></li>
+               <li role="menuitem"><Link href="/#" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Home</Link></li>
+              <li role="menuitem"><Link href="/frangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frangos</Link></li>
               <li role="menuitem"><Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Burguer</Link></li>
               <li role="menuitem"><Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Porções</Link></li>
               <li role="menuitem"><Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Bebidas</Link></li>
             </ul>
           )}
         </div>
-        <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-500 hover:text-zinc-900">
+        <Link href="/sobre" onClick={closeAllMenus} className="text-lg font-semibold text-zinc-900 hover:text-zinc-400">
           Sobre Nós
         </Link>
       </div>
@@ -108,7 +109,8 @@ const Navbar: React.FC<NavbarProps> = ({ imagesrc, title }) => {
             </Button>
             {isMenuOpen && (
               <ul className="mt-2 bg-gray-100 rounded-md py-1" role="menu">
-                <li role="menuitem"><Link href="/xfrangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frango</Link></li>
+                 <li role="menuitem"><Link href="/#" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Home</Link></li>
+                <li role="menuitem"><Link href="/frangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frangos</Link></li>
                 <li role="menuitem"><Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Burguer</Link></li>
                 <li role="menuitem"><Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Porções</Link></li>
                 <li role="menuitem"><Link href="/bebidas" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Bebidas</Link></li>

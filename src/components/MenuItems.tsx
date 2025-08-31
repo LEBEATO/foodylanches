@@ -3,7 +3,7 @@ import { IconPlus } from "@tabler/icons-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Product } from "@/app/page";
+import { Product } from "@/types/types";
 
 interface MenuItemsProps extends Product {
   addToCart: (product: Product) => void;
