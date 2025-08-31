@@ -1,5 +1,3 @@
-// src/app/bebidas/page.tsx
-
 'use client';
 import { useEffect, useState } from "react";
 import CartButton from "@/components/CartButton";
@@ -15,7 +13,7 @@ export interface NavbarProps {
   title: string;
 }
 
-export default function BebidasPage() {
+export default function Bebidas() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
