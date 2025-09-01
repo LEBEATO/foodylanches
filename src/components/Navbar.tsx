@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button'; // Importe o componente Button
 // Definição do componente Navbar.
 const Navbar = () => {
   // Estado para controlar a visibilidade do menu suspenso.
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Declare e inicialize o estado
+  const [isMenuOpen, setIsMenuOpen] = useState(true); // Declare e inicialize o estado
 
   // Função para fechar todos os menus.
   const closeAllMenus = () => {
-    setIsMenuOpen(true);
+    setIsMenuOpen(false);
   };
   
   return (
@@ -40,7 +40,7 @@ const Navbar = () => {
           </Button>
           {isMenuOpen && (
             <ul className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10" role="menu">
-               <li role="menuitem"><Link href="/#" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Home</Link></li>
+               <li role="menuitem"><Link href="/" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Home</Link></li>
               <li role="menuitem"><Link href="/frangos" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Frangos</Link></li>
               <li role="menuitem"><Link href="/burguer" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">X-Burguer</Link></li>
               <li role="menuitem"><Link href="/porcoes" onClick={closeAllMenus} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-500">Porções</Link></li>
