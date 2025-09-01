@@ -1,8 +1,7 @@
 'use client';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
-import { IconCircleArrowLeftFilled } from "@tabler/icons-react"; 
+
 
 export default function Sobre() {
 
@@ -12,12 +11,7 @@ export default function Sobre() {
 
     return (
         <>
-            <div className="fixed top-0 left-0 w-full z-50 p-8 pt-4">
-                <Link href="/" className="flex items-center gap-1">
-                  <IconCircleArrowLeftFilled size={50} color='#272626'/>
-                  <span className="text-zinc-900 font-bold">Voltar</span>
-                </Link>
-            </div>
+          
             
             <Head>
                 <title>Sobre Nós | Foody Lanches</title>
