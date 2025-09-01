@@ -5,8 +5,7 @@ import MenuSection from "@/components/MenuSection";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useCart } from "@/components/CartContext" 
-import Navbar from "@/app/navbar/page";
-import { Product } from "@/types"; // Importe a interface do arquivo types.ts
+import { Product } from "@/types/types"; // Importe a interface do arquivo types.ts
 
 export interface NavbarProps {
   imagesrc: string;
@@ -59,10 +58,7 @@ export default function Bebidas() {
   return (
     <main className="pt-2">
       <div className="fixed top-0 left-0 w-full z-50 p-8 pt-4">
-       <Navbar
-        imagesrc="/logo.png"
-        title="Foody Lanches"
-       />
+    
       </div>
       <div className="pt-24">
         <MenuSection
