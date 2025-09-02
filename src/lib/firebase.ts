@@ -1,10 +1,9 @@
 // src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth'; // Exemplo para autenticação
-import { getFirestore } from 'firebase/firestore'; // Exemplo para o Firestore
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-// Sua configuração do Firebase usando variáveis de ambiente
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -15,13 +14,16 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Inicialize o Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Inicialize os serviços que você vai usar
-const analytics = getAnalytics(app);
-const auth = getAuth(app); // Exemplo
-const db = getFirestore(app); // Exemplo
+// Use uma variável 'analytics' que pode ser nula inicialmente
+let analytics = null;
 
-// Exporte as instâncias para uso em outros arquivos
+// Verifique se o código está sendo executado no navegador (lado do cliente)
+if (typeof window !== 'undefined') {
+  analytics = getAnalytics(app);
+}
+
 export { app, analytics, auth, db };

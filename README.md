@@ -30,8 +30,8 @@ Siga os passos abaixo para rodar o projeto na sua máquina:
 
 1.  Clone o repositório:
    
-    git clone [https://github.com/seu-usuario/seu-projeto.git](https://github.com/seu-usuario/seu-projeto.git)
-    cd seu-projeto
+    git clone [https://github.com/seu-usuario/seu-projeto.git](https://github.com/LEBEATO)./foodylanches.git)
+    
     
 2.  Instale as dependências:
    
